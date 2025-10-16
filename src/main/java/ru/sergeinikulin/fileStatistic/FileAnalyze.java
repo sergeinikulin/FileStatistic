@@ -25,6 +25,7 @@ public class FileAnalyze {
     // Регулярные выражения для комментариев
     private static final Pattern JAVA_COMMENT = Pattern.compile("^\\s*//");
     private static final Pattern BASH_COMMENT = Pattern.compile("^\\s*#");
+    private static final Pattern XML_COMMENT = Pattern.compile("^\\s*<!--");
 
     public FileAnalyze(Path rootPath, boolean recursive, int maxDepth, int threadCount, Set<String> includeExt, Set<String> excludeExt, boolean useGitIgnore, OutputFormat outputFormat) {
         this.rootPath = rootPath;
@@ -223,6 +224,8 @@ public class FileAnalyze {
             case "rb":
             case "pl":
                 return BASH_COMMENT;
+            case "xml":
+                return XML_COMMENT;
             default:
                 return null;
         }
