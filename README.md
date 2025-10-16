@@ -1,9 +1,9 @@
 ## Инструкция по работе с программой
 
-Перед запуском программы, java классы необходимо скомпиллировать:
+### Перед запуском программы, java классы необходимо скомпиллировать:
 
 ```cmd
-# 1. навигируемся в директорию с классами программы
+# 1. навигируемся в директорию с программой
 PS C:\> cd C:\Users\NIKULIN\IdeaProjects\FileStatistic
 
 # 2. навигируемся в директорию с java файлами
@@ -13,17 +13,15 @@ PS C:\Users\NIKULIN\IdeaProjects\FileStatistic> cd src/main/java/ru/sergeinikuli
 PS C:\Users\NIKULIN\IdeaProjects\FileStatistic\src\main\java\ru\sergeinikulin\fileStatistic> javac *.java 
 ```
 
+### Как использовать программу:
 
-
-
-
-Как использовать программу:
+#### -path параметр
 
 ```cmd
-PS C:\Users\NIKULIN\IdeaProjects\FileStatistic\src\main\java> java -cp . ru.sergeinikulin.fileStatistic.Main ru/sergeinikulin/fileStatistic
+PS C:\Users\NIKULIN\IdeaProjects\FileStatistic\src\main\java> java -cp . ru.sergeinikulin.fileStatistic.Main ../resources
 ```
 
-Вывод программы: 
+Вывод: 
 
 ```java
 File Statistics:
@@ -50,4 +48,91 @@ Extension: .json
   Non-empty lines: 11
   Comment lines: 0
 ```
+
+*/resources* в команде - это путь, с которым мы работаем, т.е параметр `<path>`. Для удобства тестирования мы будем использовать отдельную директорию, но ее можно в команде поменять на нужную.
+
+#### --recursive параметр
+
+```cmd
+PS C:\Users\NIKULIN\IdeaProjects\FileStatistic\src\main\java> java -cp . ru.sergeinikulin.fileStatistic.Main ../resources --recursive
+```
+
+Вывод:
+
+```
+File Statistics:
+================
+
+Extension: .java
+  Files: 3
+  Size: 13863 bytes
+  Total lines: 430
+  Non-empty lines: 347
+  Comment lines: 4
+
+Extension: .sh
+  Files: 3
+  Size: 84 bytes
+  Total lines: 6
+  Non-empty lines: 6
+  Comment lines: 3
+
+Extension: .json
+  Files: 3
+  Size: 702 bytes
+  Total lines: 36
+  Non-empty lines: 33
+  Comment lines: 0
+```
+
+мы полностью рекурсивно пробежались по всей директории и собрали статистику. 
+
+#### --max-depth параметр
+
+```cmd
+PS C:\Users\NIKULIN\IdeaProjects\FileStatistic\src\main\java> java -cp . ru.sergeinikulin.fileStatistic.Main ../resources --recursive --max-depth=2
+```
+
+Вывод
+
+```
+File Statistics:
+================
+
+Extension: .sh
+  Files: 2
+  Size: 56 bytes
+  Total lines: 4
+  Non-empty lines: 4
+  Comment lines: 2
+
+Extension: .json
+  Files: 2
+  Size: 468 bytes
+  Total lines: 24
+  Non-empty lines: 22
+  Comment lines: 0
+```
+
+Мы при анализе погрузились только на определенную грубину, заданную в параметре --max-depth
+
+#### --include-ext
+
+```cmd
+PS C:\Users\NIKULIN\IdeaProjects\FileStatistic\src\main\java> java -cp . ru.sergeinikulin.fileStatistic.Main ../resources --recursive --include-ext=java
+```
+
+```
+File Statistics:
+================
+
+Extension: .java
+  Files: 3
+  Size: 13863 bytes
+  Total lines: 430
+  Non-empty lines: 347
+  Comment lines: 4
+```
+
+Вывел **только** статистику по java файлам во **всех** директориях.
 
