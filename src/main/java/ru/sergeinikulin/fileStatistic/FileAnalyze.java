@@ -52,7 +52,7 @@ public class FileAnalyze {
         printStatistics();
     }
 
-    private void loadGitIgnore() throws IOException {
+    public void loadGitIgnore() throws IOException {
         Path gitIgnoreFile = rootPath.resolve(".gitignore");
         if (Files.exists(gitIgnoreFile)) {
             List<String> lines = Files.readAllLines(gitIgnoreFile);
@@ -65,7 +65,7 @@ public class FileAnalyze {
         }
     }
 
-    private void printStatistics() {
+    public void printStatistics() {
         switch (outputFormat) {
             case PLAIN:
                 printPlain();
@@ -79,7 +79,7 @@ public class FileAnalyze {
         }
     }
 
-    private void printPlain() {
+    public void printPlain() {
         System.out.println("File Statistics:");
         System.out.println("================\n");
 
@@ -97,7 +97,7 @@ public class FileAnalyze {
         }
     }
 
-    private void printXml() {
+    public void printXml() {
         System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         System.out.println("<statistics>");
 
@@ -117,7 +117,7 @@ public class FileAnalyze {
         System.out.println("</statistics>");
     }
 
-    private void printJson() {
+    public void printJson() {
         System.out.println("{");
         System.out.println("  \"statistics\": [");
 
@@ -148,7 +148,7 @@ public class FileAnalyze {
     }
 
 
-    private void processFiles(List<Path> files) throws InterruptedException {
+    public void processFiles(List<Path> files) throws InterruptedException {
         ExecutorService executor = Executors.newFixedThreadPool(threadCount);
         List<Future<?>> futures = new ArrayList<>();
 
@@ -167,7 +167,7 @@ public class FileAnalyze {
         executor.shutdown();
     }
 
-    private void processFile(Path file) {
+    public void processFile(Path file) {
         try {
             String ext = getFileExtension(file.getFileName().toString()).toLowerCase();
             FileStatistics stats = analyzeFile(file, ext);
@@ -178,12 +178,12 @@ public class FileAnalyze {
         }
     }
 
-    private String getFileExtension(String fileName) {
+    public String getFileExtension(String fileName) {
         int dotIndex = fileName.lastIndexOf('.');
         return (dotIndex == -1) ? "" : fileName.substring(dotIndex + 1);
     }
 
-    private FileStatistics analyzeFile(Path file, String ext) throws IOException {
+    public FileStatistics analyzeFile(Path file, String ext) throws IOException {
         long fileSize = Files.size(file);
         long totalLines = 0;
         long nonEmptyLines = 0;
@@ -209,7 +209,7 @@ public class FileAnalyze {
         return new FileStatistics(1, fileSize, totalLines, nonEmptyLines, commentLines);
     }
 
-    private Pattern getCommentPattern(String ext) {
+    public Pattern getCommentPattern(String ext) {
         switch (ext) {
             case "java":
             case "js":
@@ -232,7 +232,7 @@ public class FileAnalyze {
     }
 
 
-    private List<Path> collectFiles() throws IOException {
+    public List<Path> collectFiles() throws IOException {
         List<Path> files = new ArrayList<>();
         int depth = recursive ? (maxDepth > 0 ? maxDepth : Integer.MAX_VALUE) : 1;
 
@@ -244,7 +244,7 @@ public class FileAnalyze {
         return files;
     }
 
-    private boolean shouldProcessFile(Path file) {
+    public boolean shouldProcessFile(Path file) {
         String fileName = file.getFileName().toString();
         String ext = getFileExtension(fileName).toLowerCase();
 
@@ -266,7 +266,7 @@ public class FileAnalyze {
         return true;
     }
 
-    private boolean isGitIgnored(Path file) {
+    public boolean isGitIgnored(Path file) {
         return gitIgnorePaths.stream().anyMatch(ignore -> file.startsWith(ignore));
     }
 

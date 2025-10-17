@@ -7,7 +7,7 @@ public class FileStatistics {
     private long nonEmptyLines;
     private long commentLines;
 
-    FileStatistics(long fileCount, long totalSize, long totalLines, long nonEmptyLines, long commentLines) {
+    public FileStatistics(long fileCount, long totalSize, long totalLines, long nonEmptyLines, long commentLines) {
         this.fileCount = fileCount;
         this.totalSize = totalSize;
         this.totalLines = totalLines;
@@ -15,7 +15,7 @@ public class FileStatistics {
         this.commentLines = commentLines;
     }
 
-    FileStatistics merge(FileStatistics other) {
+    public FileStatistics merge(FileStatistics other) {
         return new FileStatistics(
                 this.fileCount + other.fileCount,
                 this.totalSize + other.totalSize,

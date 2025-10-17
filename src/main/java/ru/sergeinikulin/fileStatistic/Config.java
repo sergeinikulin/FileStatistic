@@ -13,7 +13,14 @@ public class Config {
     private boolean useGitIgnore;
     private OutputFormat outputFormat;
 
-    public Config(String path, boolean recursive, int maxDepth, int threadCount, Set<String> includeExt, Set<String> excludeExt, boolean useGitIgnore, OutputFormat outputFormat) {
+    public Config(String path,
+                  boolean recursive,
+                  int maxDepth,
+                  int threadCount,
+                  Set<String> includeExt,
+                  Set<String> excludeExt,
+                  boolean useGitIgnore,
+                  OutputFormat outputFormat) {
         this.path = path;
         this.recursive = recursive;
         this.maxDepth = maxDepth;
